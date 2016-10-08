@@ -1,11 +1,11 @@
 import {NgModule, ModuleWithProviders} from '@angular/core';
 
 import {
-  MdLiveAnnouncer,
   MdRippleModule,
   RtlModule,
   PortalModule,
-  OverlayModule
+  OverlayModule,
+  A11yModule,
 } from './core/index';
 
 import {MdButtonToggleModule} from './button-toggle/index';
@@ -57,6 +57,7 @@ const MATERIAL_MODULES = [
   OverlayModule,
   PortalModule,
   RtlModule,
+  A11yModule,
 ];
 
 @NgModule({
@@ -78,6 +79,7 @@ const MATERIAL_MODULES = [
     RtlModule.forRoot(),
 
     // These modules include providers.
+    A11yModule.forRoot(),
     MdButtonToggleModule.forRoot(),
     MdDialogModule.forRoot(),
     MdIconModule.forRoot(),
@@ -90,7 +92,6 @@ const MATERIAL_MODULES = [
     OverlayModule.forRoot(),
   ],
   exports: MATERIAL_MODULES,
-  providers: [MdLiveAnnouncer]
 })
 export class MaterialRootModule { }
 
