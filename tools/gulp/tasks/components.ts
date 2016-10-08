@@ -22,8 +22,6 @@ const componentsDir = path.join(SOURCE_ROOT, 'lib');
 
 /** Path to the tsconfig used for ESM output. */
 const tsconfigPath = path.relative(PROJECT_ROOT, path.join(componentsDir, 'tsconfig.json'));
-
-
 /** [Watch task] Rebuilds (ESM output) whenever ts, scss, or html sources change. */
 task(':watch:components', () => {
   watch(path.join(componentsDir, '**/*.ts'), [':build:components:ts']);
@@ -111,16 +109,19 @@ task(':build:components:rollup', [':build:components:inline'], () => {
 task(':build:components:inline', sequenceTask(
   [':build:components:ts', ':build:components:scss', ':build:components:assets'],
   ':inline-resources',
+
 ));
 
-<<<<<<< HEAD
 task('build:components:dev', sequenceTask(
   ':build:components:ts',
   ':build:components:scss',
   ':build:components:assets'
 ));
 
-=======
+
+
+
+
 /** Inlines resources (html, css) into the JS output (for either ESM or CJS output). */
 task(':inline-resources', () => inlineResources(DIST_COMPONENTS_ROOT));
 
@@ -128,7 +129,6 @@ task(':inline-resources', () => inlineResources(DIST_COMPONENTS_ROOT));
 task('build:components', [':build:components:rollup']);
 
 /** Generates metadata.json files for all of the components. */
->>>>>>> upstream/master
 task(':build:components:ngc', ['build:components'], execNodeTask(
   '@angular/compiler-cli', 'ngc', ['-p', tsconfigPath]
 ));
