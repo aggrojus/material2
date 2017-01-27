@@ -122,18 +122,12 @@ task('build:components:dev', sequenceTask(
   ':build:components:assets'
 ));
 
-<<<<<<< HEAD
-
-
-
-=======
 /** Builds components with minified HTML and CSS inlined into the built JS. */
 task(':build:components:inline:release', sequenceTask(
   [':build:components:ts', ':build:components:scss', ':build:components:assets'],
   ':build:components:assets:minify',
   ':inline-resources'
 ));
->>>>>>> upstream/master
 
 /** Inlines resources (html, css) into the JS output (for either ESM or CJS output). */
 task(':inline-resources', () => inlineResources(DIST_COMPONENTS_ROOT));
