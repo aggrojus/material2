@@ -1,6 +1,6 @@
-# Contributing to Angular 2 Material
+# Contributing to Angular Material
 
-We would love for you to contribute to Angular 2 Material and help make it ever better!
+We would love for you to contribute to Angular Material and help make it ever better!
 As a contributor, here are the guidelines we would like you to follow:
 
  - [Code of Conduct](#coc)
@@ -19,7 +19,7 @@ Help us keep Angular open and inclusive. Please read and follow our [Code of Con
 
 If you have questions about how to *use* Angular Material, please direct them to the 
 [Google Group][material-group] discussion list or [StackOverflow][stackoverflow]. 
-Please note that Angular 2 Material is still in very early development, and the team's capacity 
+Please note that Angular Material is still in very early development, and the team's capacity 
 to answer usage questions is limited. Community chat is also available on [Gitter][gitter].
 
 ## <a name="issue"></a> Found an Issue?
@@ -33,7 +33,7 @@ You can help the team even more and [submit a Pull Request](#submit-pr) with a f
 ## <a name="feature"></a> Want a Feature?
 You can *request* a new feature by [submitting an issue](#submit-issue) to our [GitHub
 Repository][github]. If you would like to *implement* a new feature, please submit an issue with
-a proposal for your work first, to be sure that we can use it. Angular 2 Material is in very early 
+a proposal for your work first, to be sure that we can use it. Angular Material is in very early 
 stages and we are not ready to accept major contributions ahead of the full release.
 Please consider what kind of change it is:
 
@@ -150,8 +150,7 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
 * All features or bug fixes **must be tested** by one or more specs (unit-tests).
 * All public API methods **must be documented**. (Details TBD).
 * We follow [Google's JavaScript Style Guide][js-style-guide], but wrap all code at
-  **100 characters**. An automated formatter is available, see
-  [DEVELOPER.md](DEVELOPER.md#clang-format).
+  **100 characters**.
 
 ## <a name="commit"></a> Commit Message Guidelines
 
@@ -234,11 +233,11 @@ changes to be accepted, the CLA must be signed. It's a quick process, we promise
 [coc]: https://github.com/angular/code-of-conduct/blob/master/CODE_OF_CONDUCT.md
 [commit-message-format]: https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/preview
 [corporate-cla]: http://code.google.com/legal/corporate-cla-v1.0.html
-[dev-doc]: https://github.com/angular/material2/blob/master/DEVELOPER.md
+[dev-doc]: https://github.com/angular/material2/blob/master/DEV_ENVIRONMENT.md
 [github]: https://github.com/angular/material2
 [gitter]: https://gitter.im/angular/material2
 [individual-cla]: http://code.google.com/legal/individual-cla-v1.0.html
-[js-style-guide]: https://google.github.io/styleguide/javascriptguide.xml
+[js-style-guide]: https://google.github.io/styleguide/jsguide.html
 [codepen]: http://codepen.io/
 [jsbin]: http://jsbin.com/
 [jsfiddle]: http://jsfiddle.net/

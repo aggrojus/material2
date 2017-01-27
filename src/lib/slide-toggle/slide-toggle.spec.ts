@@ -2,7 +2,7 @@ import {async, ComponentFixture, TestBed, fakeAsync, tick} from '@angular/core/t
 import {By, HAMMER_GESTURE_CONFIG} from '@angular/platform-browser';
 import {Component} from '@angular/core';
 import {MdSlideToggle, MdSlideToggleChange, MdSlideToggleModule} from './slide-toggle';
-import {FormsModule, NgControl} from '@angular/forms';
+import {FormsModule, NgControl, ReactiveFormsModule, FormControl} from '@angular/forms';
 import {TestGestureConfig} from '../slider/test-gesture-config';
 
 describe('MdSlideToggle', () => {
@@ -11,8 +11,8 @@ describe('MdSlideToggle', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [MdSlideToggleModule.forRoot(), FormsModule],
-      declarations: [SlideToggleTestApp, SlideToggleFormsTestApp],
+      imports: [MdSlideToggleModule.forRoot(), FormsModule, ReactiveFormsModule],
+      declarations: [SlideToggleTestApp, SlideToggleFormsTestApp, SlideToggleWithFormControl],
       providers: [
         {provide: HAMMER_GESTURE_CONFIG, useFactory: () => gestureConfig = new TestGestureConfig()}
       ]
@@ -189,6 +189,17 @@ describe('MdSlideToggle', () => {
       expect(inputElement.id).toMatch(/md-slide-toggle-[0-9]+-input/g);
     });
 
+    it('should forward the tabIndex to the underlying input', () => {
+      fixture.detectChanges();
+
+      expect(inputElement.tabIndex).toBe(0);
+
+      testComponent.slideTabindex = 4;
+      fixture.detectChanges();
+
+      expect(inputElement.tabIndex).toBe(4);
+    });
+
     it('should forward the specified name to the input', () => {
       testComponent.slideName = 'myName';
       fixture.detectChanges();
@@ -336,6 +347,16 @@ describe('MdSlideToggle', () => {
       expect(inputElement.required).toBe(false);
     });
 
+    it('should focus on underlying input element when focus() is called', () => {
+      expect(slideToggleElement.classList).not.toContain('md-slide-toggle-focused');
+      expect(document.activeElement).not.toBe(inputElement);
+
+      slideToggle.focus();
+      fixture.detectChanges();
+
+      expect(document.activeElement).toBe(inputElement);
+      expect(slideToggleElement.classList).toContain('md-slide-toggle-focused');
+    });
   });
 
   describe('custom template', () => {
@@ -509,6 +530,34 @@ describe('MdSlideToggle', () => {
 
   });
 
+  describe('with a FormControl', () => {
+    let fixture: ComponentFixture<SlideToggleWithFormControl>;
+
+    let testComponent: SlideToggleWithFormControl;
+    let slideToggle: MdSlideToggle;
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(SlideToggleWithFormControl);
+      fixture.detectChanges();
+
+      testComponent = fixture.debugElement.componentInstance;
+      slideToggle = fixture.debugElement.query(By.directive(MdSlideToggle)).componentInstance;
+    });
+
+    it('should toggle the disabled state', () => {
+      expect(slideToggle.disabled).toBe(false);
+
+      testComponent.formControl.disable();
+      fixture.detectChanges();
+
+      expect(slideToggle.disabled).toBe(true);
+
+      testComponent.formControl.enable();
+      fixture.detectChanges();
+
+      expect(slideToggle.disabled).toBe(false);
+    });
+  });
 });
 
 /**
@@ -525,20 +574,21 @@ function dispatchFocusChangeEvent(eventName: string, element: HTMLElement): void
 @Component({
   selector: 'slide-toggle-test-app',
   template: `
-    <md-slide-toggle [(ngModel)]="slideModel" 
+    <md-slide-toggle [(ngModel)]="slideModel"
                      [required]="isRequired"
-                     [disabled]="isDisabled" 
-                     [color]="slideColor" 
-                     [id]="slideId" 
-                     [checked]="slideChecked" 
-                     [name]="slideName" 
-                     [ariaLabel]="slideLabel"
-                     [ariaLabelledby]="slideLabelledBy" 
-                     (change)="onSlideChange($event)" 
+                     [disabled]="isDisabled"
+                     [color]="slideColor"
+                     [id]="slideId"
+                     [checked]="slideChecked"
+                     [name]="slideName"
+                     [aria-label]="slideLabel"
+                     [aria-labelledby]="slideLabelledBy"
+                     [tabIndex]="slideTabindex"
+                     (change)="onSlideChange($event)"
                      (click)="onSlideClick($event)">
-                     
+
       <span>Test Slide Toggle</span>
-      
+
     </md-slide-toggle>`,
 })
 class SlideToggleTestApp {
@@ -551,6 +601,7 @@ class SlideToggleTestApp {
   slideName: string;
   slideLabel: string;
   slideLabelledBy: string;
+  slideTabindex: number;
   lastEvent: MdSlideToggleChange;
 
   onSlideClick(event: Event) {}
@@ -571,4 +622,15 @@ class SlideToggleTestApp {
 class SlideToggleFormsTestApp {
   isSubmitted: boolean = false;
   isRequired: boolean = false;
+}
+
+
+@Component({
+  template: `
+    <md-slide-toggle [formControl]="formControl">
+      <span>Test Slide Toggle</span>
+    </md-slide-toggle>`,
+})
+class SlideToggleWithFormControl {
+  formControl = new FormControl();
 }
